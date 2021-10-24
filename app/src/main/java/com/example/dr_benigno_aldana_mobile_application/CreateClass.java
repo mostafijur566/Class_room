@@ -1,6 +1,9 @@
 package com.example.dr_benigno_aldana_mobile_application;
 
-public class CreateClass {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class CreateClass implements Parcelable {
     String class_name;
     String section;
     String room;
@@ -20,6 +23,27 @@ public class CreateClass {
     public CreateClass() {
 
     }
+
+    protected CreateClass(Parcel in) {
+        class_name = in.readString();
+        section = in.readString();
+        room = in.readString();
+        subject = in.readString();
+        class_code = in.readString();
+        user_name = in.readString();
+    }
+
+    public static final Creator<CreateClass> CREATOR = new Creator<CreateClass>() {
+        @Override
+        public CreateClass createFromParcel(Parcel in) {
+            return new CreateClass(in);
+        }
+
+        @Override
+        public CreateClass[] newArray(int size) {
+            return new CreateClass[size];
+        }
+    };
 
     public String getClass_name() {
         return class_name;
@@ -67,5 +91,20 @@ public class CreateClass {
 
     public void setUser_name(String user_name) {
         this.user_name = user_name;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(class_name);
+        dest.writeString(section);
+        dest.writeString(room);
+        dest.writeString(subject);
+        dest.writeString(class_code);
+        dest.writeString(user_name);
     }
 }

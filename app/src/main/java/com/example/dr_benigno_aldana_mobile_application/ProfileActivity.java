@@ -1,9 +1,13 @@
 package com.example.dr_benigno_aldana_mobile_application;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.security.FileIntegrityManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -256,6 +260,17 @@ public class ProfileActivity extends AppCompatActivity implements ExampleDialog.
                                 }
 
                                 class_card.setAdapter(cardAdapter);
+
+                                class_card.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        CreateClass createClass = createClassList.get(position);
+
+                                        Intent intent = new Intent(ProfileActivity.this, ClassActivity.class);
+                                        intent.putExtra("create_class", createClass);
+                                        startActivity(intent);
+                                    }
+                                });
                             }
 
                             @Override
@@ -297,6 +312,17 @@ public class ProfileActivity extends AppCompatActivity implements ExampleDialog.
                                 }
 
                                 class_card.setAdapter(cardAdapter);
+
+                                class_card.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        CreateClass createClass = createClassList.get(position);
+
+                                        Intent intent = new Intent(ProfileActivity.this, ClassActivity.class);
+                                        intent.putExtra("create_class", createClass);
+                                        startActivity(intent);
+                                    }
+                                });
                             }
 
                             @Override
