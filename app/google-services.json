@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "738457154636",
+    "project_id": "dr-benigno-aldana",
+    "storage_bucket": "dr-benigno-aldana.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738457154636:android:25e9b6fbdc8e01992db0e9",
+        "android_client_info": {
+          "package_name": "com.example.dr_benigno_aldana_mobile_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738457154636-j9kdlr3ohq3k13kq24ua4pe8drvhmjme.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV5Tjf5K1QHau0SWXIlQsHU__I0HV3OFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "738457154636-j9kdlr3ohq3k13kq24ua4pe8drvhmjme.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

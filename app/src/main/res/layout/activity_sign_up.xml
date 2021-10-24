@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/sign_up"
+    tools:context=".SignUpActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SIGN UP"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="#2A9DF4"
+        android:layout_margin="10dp"
+        />
+
+    <EditText
+        android:id="@+id/txt_name"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:inputType="textPersonName"
+        />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+
+        />
+
+    <View
+        android:layout_width="245dp"
+        android:layout_height="1dp"
+        android:background="#AAAAAA"
+        />
+
+
+    <EditText
+        android:id="@+id/txt_number"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="Phone Number"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:inputType="phone"
+        />
+
+    <EditText
+        android:id="@+id/txt_email"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:inputType="textEmailAddress"
+        />
+
+    <EditText
+        android:id="@+id/txt_password"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:padding="10dp"
+        android:inputType="textPassword"
+        />
+
+    <Button
+        android:id="@+id/btn_sign_up"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:background="@drawable/round_button"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:layout_margin="10dp"
+        />
+
+    <TextView
+        android:id="@+id/txtLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Login"
+        android:layout_marginLeft="28dp"
+        android:textColor="#2A9DF4"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        />
+
+</LinearLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
+
+
+    <LinearLayout
+        android:id="@+id/card_class"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:background="@drawable/round_card"
+        android:padding="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/class_card"
+            >
+
+            <TextView
+                android:id="@+id/card_class_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Eng101"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:background="#8FFDBA14"
+                />
+
+            <TextView
+                android:id="@+id/card_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mostafijur Rahman"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:background="#AEFDBA14"
+                android:layout_marginTop="45dp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
