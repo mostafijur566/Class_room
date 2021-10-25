@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="8"
     tools:context=".ClassActivity">
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/class_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,5 +17,53 @@
         android:text="This is test"
         android:textSize="25sp"
         />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        >
+
+        <ListView
+            android:id="@+id/txt_message_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:weightSum="6"
+        android:padding="10dp"
+        >
+
+        <EditText
+            android:id="@+id/txt_message"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="5"
+            android:layout_gravity="bottom"
+            android:inputType="textMultiLine"
+            android:hint="Announce something to your class"
+            />
+
+        <ImageView
+            android:id="@+id/btn_send"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_send_24"
+            />
+
+    </LinearLayout>
+
+
+
 
 </LinearLayout>

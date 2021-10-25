@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dr_Benigno_Aldana_Mobile_Application">
         <activity
+            android:name=".NewsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ClassActivity"
             android:exported="false" />
         <activity
