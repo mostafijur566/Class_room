@@ -9,7 +9,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CardView card_profile, card_news;
+    private CardView card_profile, card_news, card_calender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         card_profile = (CardView) findViewById(R.id.card_profile);
         card_news = (CardView) findViewById(R.id.card_news);
+        card_calender = (CardView) findViewById(R.id.card_calender);
 
         card_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +34,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, NewsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        card_calender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, EventActivity.class);
                 startActivity(intent);
             }
         });

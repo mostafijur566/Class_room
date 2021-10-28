@@ -1,10 +1,14 @@
 package com.example.dr_benigno_aldana_mobile_application;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
@@ -18,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -142,19 +148,30 @@ public class SignUpActivity extends AppCompatActivity {
                         loadingDialog.dismissDialog();
                         if (task.isSuccessful()) {
 
-                            current_user = FirebaseAuth.getInstance().getCurrentUser();
-                            String uid = current_user.getUid();
+                            mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful())
+                                    {
+                                        current_user = FirebaseAuth.getInstance().getCurrentUser();
+                                        String uid = current_user.getUid();
 
-                            if(type.equals("Teacher"))
-                            {
-                                User user = new User(name, type, number);
-                                databaseReference.child("Teachers").child(uid).setValue(user);
-                            }
-                            else{
-                                User user = new User(name, type, number);
-                                databaseReference.child("Students").child(uid).setValue(user);
-                            }
-                            Toast.makeText(SignUpActivity.this, "Register is successful", Toast.LENGTH_LONG).show();
+                                        if(type.equals("Teacher"))
+                                        {
+                                            User user = new User(name, type, number);
+                                            databaseReference.child("Teachers").child(uid).setValue(user);
+                                        }
+                                        else{
+                                            User user = new User(name, type, number);
+                                            databaseReference.child("Students").child(uid).setValue(user);
+                                        }
+                                        Toast.makeText(SignUpActivity.this, "Verification email has been sent", Toast.LENGTH_LONG).show();
+                                    }
+
+                                    else
+                                        Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
 
                         }
                         else {
