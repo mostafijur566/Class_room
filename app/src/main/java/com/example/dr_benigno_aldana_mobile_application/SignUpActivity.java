@@ -165,7 +165,10 @@ public class SignUpActivity extends AppCompatActivity {
                                             User user = new User(name, type, number);
                                             databaseReference.child("Students").child(uid).setValue(user);
                                         }
+                                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                                         Toast.makeText(SignUpActivity.this, "Verification email has been sent", Toast.LENGTH_LONG).show();
+                                        startActivity(intent);
+
                                     }
 
                                     else

@@ -53,8 +53,6 @@ public class ClassActivity extends AppCompatActivity {
 
         txt = (TextView) findViewById(R.id.class_test) ;
 
-        //txt.setText(createClass.getClass_code());
-
 
         getSupportActionBar().setTitle(createClass.class_name);
 
@@ -75,6 +73,24 @@ public class ClassActivity extends AppCompatActivity {
         //txt.setText(uid);
 
         btn_send = (ImageView) findViewById(R.id.btn_send);
+
+        get_name.child("Students").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                {
+                    if(dataSnapshot.getKey().equals(uid))
+                    {
+                        txt_message.setText("hello");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +159,6 @@ public class ClassActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-
 
         databaseReference.child(createClass.getClass_code()).child("messages").addValueEventListener(new ValueEventListener() {
             @Override
