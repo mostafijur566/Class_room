@@ -46,6 +46,8 @@ public class AnnouncementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_announcement);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getSupportActionBar().setTitle("Announcement");
 
         createClass = getIntent().getParcelableExtra("create_class");

@@ -20,6 +20,8 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getSupportActionBar().setTitle("School Calendar");
 
         event_txt_title = (EditText) findViewById(R.id.event_txt_title);

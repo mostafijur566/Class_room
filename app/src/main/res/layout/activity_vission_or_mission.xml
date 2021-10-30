@@ -4,13 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:orientation="vertical"
-    tools:context=".NewsActivity">
+    android:gravity="center"
+    tools:context=".VissionOrMissionActivity">
 
-    <ListView
-        android:id="@+id/listView_news"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Vision/Mission"
+        android:textAlignment="center"
+        android:textColor="#4E4E4E"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
 
 </LinearLayout>

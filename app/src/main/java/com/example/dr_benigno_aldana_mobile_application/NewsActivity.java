@@ -3,7 +3,9 @@ package com.example.dr_benigno_aldana_mobile_application;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.hardware.lights.LightsManager;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -12,9 +14,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NewsActivity extends AppCompatActivity {
 
-    private TextView txt_heading, txt_news, txt_heading2, txt_news2;
+    private ListView listView_news;
+
+    private List<News> newsList;
+    private NewsAdapter newsAdapter;
 
     DatabaseReference databaseReference;
 
@@ -29,11 +37,11 @@ public class NewsActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("News");
 
-        txt_heading = (TextView) findViewById(R.id.txt_heading);
-        txt_news = (TextView) findViewById(R.id.txt_news);
+        newsList = new ArrayList<>();
 
-        txt_heading2 = (TextView) findViewById(R.id.txt_heading2);
-        txt_news2 = (TextView) findViewById(R.id.txt_news2);
+        newsAdapter = new NewsAdapter(NewsActivity.this, newsList);
+
+        listView_news = (ListView) findViewById(R.id.listView_news);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("News");
 
@@ -44,16 +52,21 @@ public class NewsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
 
-        //....................................news1.........................................
-        databaseReference.child("news1").addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 loadingDialog.dismissDialog();
-                News news = snapshot.getValue(News.class);
 
-                txt_heading.setText(news.getTitle());
-                txt_news.setText(news.getNews());
+                newsList.clear();
+
+                for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                {
+                    News news = dataSnapshot.getValue(News.class);
+                    newsList.add(news);
+                }
+
+                listView_news.setAdapter(newsAdapter);
             }
 
             @Override
@@ -61,27 +74,6 @@ public class NewsActivity extends AppCompatActivity {
 
             }
         });
-        //....................................news1.........................................
-
-
-        //....................................news2.........................................
-        databaseReference.child("news2").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                loadingDialog.dismissDialog();
-                News news = snapshot.getValue(News.class);
-
-                txt_heading2.setText(news.getTitle());
-                txt_news2.setText(news.getNews());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        //....................................news2.........................................
 
         super.onStart();
     }

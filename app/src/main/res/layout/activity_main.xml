@@ -240,6 +240,7 @@
             >
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_objective"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="170dp"
@@ -278,6 +279,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_hymn"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="170dp"
@@ -329,6 +331,7 @@
             >
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_vision"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="170dp"
@@ -367,6 +370,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_about"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="170dp"
@@ -419,6 +423,7 @@
             >
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_contact"
                 android:layout_width="0dp"
                 android:layout_weight="2"
                 android:layout_height="170dp"
