@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnnouncementActivity extends AppCompatActivity {
+
+    private TextView test;
 
     private ListView txt_message_list;
     private EditText txt_message;
@@ -69,6 +73,8 @@ public class AnnouncementActivity extends AppCompatActivity {
 
         newsAdapter = new NewsAdapter(AnnouncementActivity.this, newsList);
 
+        test = (TextView) findViewById(R.id.test);
+
         txt_message_list = (ListView) findViewById(R.id.announce_list_view);
         txt_message = (EditText) findViewById(R.id.txt_announce);
 
@@ -96,7 +102,7 @@ public class AnnouncementActivity extends AppCompatActivity {
                             if(dataSnapshot.getKey().equals(uid))
                             {
                                 User user = dataSnapshot.getValue(User.class);
-                                News news = new News(user.getName(), message, key);
+                                News news = new News(user.getName(), message, key, uid);
 
                                 databaseReference.child("Announcements").child("messages").child(key).setValue(news);
                                 txt_message.setText("");
@@ -150,56 +156,61 @@ public class AnnouncementActivity extends AppCompatActivity {
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                     News news = newsList.get(position);
 
-
-                                    alert_dialog_builder = new AlertDialog.Builder(AnnouncementActivity.this);
-                                    alert_dialog_builder.setIcon(R.drawable.ic_baseline_info_24);
-                                    alert_dialog_builder.setTitle("Edit or Delete");
-                                    alert_dialog_builder.setNegativeButton("Edit", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            EditText message = new EditText(view.getContext());
-                                            message.setText(news.getMessage());
-                                            androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(AnnouncementActivity.this);
-                                            alertDialogBuilder.setTitle("Edit");
-                                            alertDialogBuilder.setView(message);
-                                            alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    try {
+                                        if(news.getUid().equals(uid)) {
+                                            alert_dialog_builder = new AlertDialog.Builder(AnnouncementActivity.this);
+                                            alert_dialog_builder.setIcon(R.drawable.ic_baseline_info_24);
+                                            alert_dialog_builder.setTitle("Edit or Delete");
+                                            alert_dialog_builder.setNegativeButton("Edit", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
+                                                    EditText message = new EditText(view.getContext());
+                                                    message.setText(news.getMessage());
+                                                    androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(AnnouncementActivity.this);
+                                                    alertDialogBuilder.setTitle("Edit");
+                                                    alertDialogBuilder.setView(message);
+                                                    alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
 
-                                                    News news1 = new News(news.getUser(), message.getText().toString(), news.getKey());
+                                                            News news1 = new News(news.getUser(), message.getText().toString(), news.getKey(), uid);
 
-                                                    databaseReference.child("Announcements").child("messages").child(news.getKey()).setValue(news1);
+                                                            databaseReference.child("Announcements").child("messages").child(news.getKey()).setValue(news1);
+                                                        }
+                                                    });
+
+                                                    alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+
+                                                        }
+                                                    });
+
+                                                    androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                                                    alertDialog.show();
                                                 }
                                             });
 
-                                            alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            alert_dialog_builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    databaseReference.child("Announcements").child("messages").child(news.getKey()).removeValue();
+                                                }
+                                            });
+
+                                            alert_dialog_builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
 
                                                 }
                                             });
 
-                                            androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                                            AlertDialog alertDialog = alert_dialog_builder.create();
                                             alertDialog.show();
                                         }
-                                    });
-
-                                    alert_dialog_builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            databaseReference.child("Announcements").child("messages").child(news.getKey()).removeValue();
-                                        }
-                                    });
-
-                                    alert_dialog_builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                        }
-                                    });
-
-                                    AlertDialog alertDialog = alert_dialog_builder.create();
-                                    alertDialog.show();
+                                    } catch (Exception e) {
+                                        Toast.makeText(getApplicationContext(), "You can't delete or edit other's content", Toast.LENGTH_LONG).show();
+                                    }
                                 }
                             });
 
