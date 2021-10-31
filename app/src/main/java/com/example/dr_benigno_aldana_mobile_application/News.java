@@ -1,31 +1,41 @@
 package com.example.dr_benigno_aldana_mobile_application;
 
 public class News {
-    String news;
-    String title;
+    String user;
+    String message;
+    String key;
 
-    public News(String news, String title) {
-        this.news = news;
-        this.title = title;
+    public News(String user, String message, String key) {
+        this.user = user;
+        this.message = message;
+        this.key = key;
     }
 
     public News() {
 
     }
 
-    public String getNews() {
-        return news;
+    public String getUser() {
+        return user;
     }
 
-    public void setNews(String news) {
-        this.news = news;
+    public void setUser(String user) {
+        this.user = user;
     }
 
-    public String getTitle() {
-        return title;
+    public String getMessage() {
+        return message;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

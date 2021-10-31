@@ -3,9 +3,12 @@ package com.example.dr_benigno_aldana_mobile_application;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -28,8 +31,10 @@ public class AnnouncementActivity extends AppCompatActivity {
 
     private ImageView btn_send;
 
-    private List<SendMessage> sendMessageList;
-    private MessageAdapter messageAdapter;
+    private List<News> newsList;
+    private NewsAdapter newsAdapter;
+
+    private AlertDialog.Builder alert_dialog_builder;
 
     LoadingDialog loadingDialog = new LoadingDialog(AnnouncementActivity.this);
 
@@ -40,6 +45,8 @@ public class AnnouncementActivity extends AppCompatActivity {
     CreateClass createClass;
 
     DatabaseReference databaseReference, get_name;
+
+    boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +65,9 @@ public class AnnouncementActivity extends AppCompatActivity {
         user_uid = FirebaseAuth.getInstance().getCurrentUser();
         uid = user_uid.getUid();
 
-        sendMessageList = new ArrayList<>();
+        newsList = new ArrayList<>();
 
-        messageAdapter = new MessageAdapter(AnnouncementActivity.this, sendMessageList);
+        newsAdapter = new NewsAdapter(AnnouncementActivity.this, newsList);
 
         txt_message_list = (ListView) findViewById(R.id.announce_list_view);
         txt_message = (EditText) findViewById(R.id.txt_announce);
@@ -89,9 +96,9 @@ public class AnnouncementActivity extends AppCompatActivity {
                             if(dataSnapshot.getKey().equals(uid))
                             {
                                 User user = dataSnapshot.getValue(User.class);
-                                SendMessage sendMessage = new SendMessage(user.getName(), message);
+                                News news = new News(user.getName(), message, key);
 
-                                databaseReference.child("Announcements").child("messages").child(key).setValue(sendMessage);
+                                databaseReference.child("Announcements").child("messages").child(key).setValue(news);
                                 txt_message.setText("");
 
                             }
@@ -118,15 +125,94 @@ public class AnnouncementActivity extends AppCompatActivity {
 
                 loadingDialog.dismissDialog();
 
-                sendMessageList.clear();
+                newsList.clear();
 
-                for(DataSnapshot dataSnapshot : snapshot.getChildren())
-                {
-                    SendMessage sendMessage = dataSnapshot.getValue(SendMessage.class);
-                    sendMessageList.add(sendMessage);
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    News news = dataSnapshot.getValue(News.class);
+                    newsList.add(news);
                 }
 
-                txt_message_list.setAdapter(messageAdapter);
+                txt_message_list.setAdapter(newsAdapter);
+
+                get_name.child("Students").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            if (dataSnapshot.getKey().equals(uid)) {
+                                flag = true;
+                            }
+                        }
+
+                        if (flag == false) {
+
+                            txt_message_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    News news = newsList.get(position);
+
+
+                                    alert_dialog_builder = new AlertDialog.Builder(AnnouncementActivity.this);
+                                    alert_dialog_builder.setIcon(R.drawable.ic_baseline_info_24);
+                                    alert_dialog_builder.setTitle("Edit or Delete");
+                                    alert_dialog_builder.setNegativeButton("Edit", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            EditText message = new EditText(view.getContext());
+                                            message.setText(news.getMessage());
+                                            androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(AnnouncementActivity.this);
+                                            alertDialogBuilder.setTitle("Edit");
+                                            alertDialogBuilder.setView(message);
+                                            alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                    News news1 = new News(news.getUser(), message.getText().toString(), news.getKey());
+
+                                                    databaseReference.child("Announcements").child("messages").child(news.getKey()).setValue(news1);
+                                                }
+                                            });
+
+                                            alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                }
+                                            });
+
+                                            androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                                            alertDialog.show();
+                                        }
+                                    });
+
+                                    alert_dialog_builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            databaseReference.child("Announcements").child("messages").child(news.getKey()).removeValue();
+                                        }
+                                    });
+
+                                    alert_dialog_builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    });
+
+                                    AlertDialog alertDialog = alert_dialog_builder.create();
+                                    alertDialog.show();
+                                }
+                            });
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
 
             @Override

@@ -8,17 +8,6 @@
     android:weightSum="8"
     tools:context=".AnnouncementActivity">
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/class_test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="This is test"
-        android:textSize="25sp"
-        />
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

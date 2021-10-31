@@ -3,28 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="10dp"
     >
 
-    <TextView
-        android:id="@+id/news_txt_heading"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="..."
-        android:textColor="#000"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="10dp"
-        android:padding="10dp"
-        />
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/profile"
+            android:layout_marginRight="5dp"
+            />
+
+        <TextView
+            android:id="@+id/news_txt_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Md. Mostafijur Rahman"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#292929"
+            />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/news_txt_news"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="..."
-        android:textColor="#000"
-        android:textSize="20sp"
-        android:padding="10dp"
+        android:text="This is message"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        android:textColor="#292929"
+        android:linksClickable="true"
         />
 
 </LinearLayout>
